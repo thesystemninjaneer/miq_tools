@@ -82,7 +82,9 @@ begin
 
   puts "Sanity check: first clone via the `git` cli..."
 
-  `ssh-agent bash -c 'ssh-add #{ssh_key_file.path}; git clone #{worktree_params[:url]} #{cli_dir}'`
+  `cp #{ssh_key_file.path} /tmp/foo && echo "" >> /tmp/foo`
+  `ssh-agent bash -c 'ssh-add /tmp/foo; git clone #{worktree_params[:url]} #{cli_dir}'; rm /tmp/foo`
+  #`ssh-agent bash -c 'ssh-add #{ssh_key_file.path}; git clone #{worktree_params[:url]} #{cli_dir}'`
   raise "error with cli clone..." unless $? == 0
   puts "Clone successful!  Displaying repo entries..."
   puts
